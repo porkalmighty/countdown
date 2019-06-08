@@ -13,6 +13,18 @@ function generate(type){
 }
 
 // TODO: add timer
+function setTimer(element){
+  let timer = 30;
+  let startTimer = setInterval(() => {
+    if(timer === 0){
+      clearInterval(startTimer);
+      element.innerHTML = "Time's up!";
+    } else {
+      timer--;
+      element.innerHTML = timer + ' seconds left';
+    }
+  },1000);
+}
 // TODO: game logic
 // TODO: score system
 // TODO: emitting values
@@ -24,18 +36,15 @@ $(function() {
   const containers = new Array();
   const screenArea = document.querySelector('.screen-area');
   const letterCount = document.querySelector('#letter-count');
+  const timer = document.querySelector('.timer');
+  const letters = ['vowel', 'consonant'];
+
   letterCount.innerHTML = charLength + " letters left";
   $('form').submit((e) => {
     e.preventDefault();
+    let requestedLetter = '';
     let ans = document.querySelector('#answer').value.toLowerCase();
-    let letters = ['vowel', 'consonant'];
-    let requestedLetter = "";
-
-    // make the array length fixed
-    if(containers.length === 9){
-      // TODO: stop the round
-      console.log('picking phase over');
-    } else {
+    if(containers.length != 9){
       if(ans.includes(letters[0]))
       {
         // TODO: generate a random vowel
@@ -52,7 +61,11 @@ $(function() {
       console.log(containers.length);
       charLength--;
     }
-
     letterCount.innerHTML = charLength === 0 ?  "The picking phase is over" : charLength + " letters left";
+
+    if(charLength === 0) {
+      timer.innerHTML = "starting in 5 seconds";
+      const start = setTimeout(() => {setTimer(timer)}, 5000);
+    }
   });
 });
