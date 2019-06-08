@@ -1,0 +1,27 @@
+{
+  "name": "countdown-game",
+  "version": "1.0.0",
+  "description": "countdowngame based on the gameshow countdown",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "launch": "nodemon index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/porkalmighty/countdown.git"
+  },
+  "author": "Mark Martin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/porkalmighty/countdown/issues"
+  },
+  "homepage": "https://github.com/porkalmighty/countdown#readme",
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^2.2.0"
+  }
+}
