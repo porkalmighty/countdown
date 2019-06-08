@@ -3,6 +3,12 @@
   <head>
     <meta charset="utf-8" />
     <title>Countdown</title>
+    <style>
+      span[id^="character-"] {
+        font-size: 2em;
+        padding-right: 10px;
+      }
+    </style>
   </head>
   <body>
     <h1>Countdown Game</h1>
@@ -11,8 +17,9 @@
     </div>
     <div class="play-area">
       <div id="letter-count"></div>
-      <div class="screen-area">
-
+      <div class="screen-area"></div>
+      <div class="conversation">
+        <ul id="chat-msg"></ul>
       </div>
       <div class="form-area">
         <form class="form">

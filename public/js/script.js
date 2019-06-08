@@ -19,6 +19,8 @@ function setTimer(element){
     if(timer === 0){
       clearInterval(startTimer);
       element.innerHTML = "Time's up!";
+      // TODO: check inputs in dictionary
+
     } else {
       timer--;
       element.innerHTML = timer + ' seconds left';
@@ -35,6 +37,7 @@ $(function() {
   var charLength = 9;
   const containers = new Array();
   const screenArea = document.querySelector('.screen-area');
+  const chatMsg = document.querySelector('#chat-msg');
   const letterCount = document.querySelector('#letter-count');
   const timer = document.querySelector('.timer');
   const letters = ['vowel', 'consonant'];
@@ -43,7 +46,12 @@ $(function() {
   $('form').submit((e) => {
     e.preventDefault();
     let requestedLetter = '';
-    let ans = document.querySelector('#answer').value.toLowerCase();
+    let msg = document.querySelector('#answer').value;
+    let ans = msg.toLowerCase();
+
+    // add chat to window
+    chatMsg.innerHTML += "<li>" + msg + "</li>";
+
     if(containers.length != 9){
       if(ans.includes(letters[0]))
       {
@@ -55,11 +63,14 @@ $(function() {
         requestedLetter = generate(letters[1]);
         console.log('you requested a consonant: ' + requestedLetter);
       }
-      screenArea.innerHTML += "<span id=\"character-\"" + containers.length + ">" + requestedLetter.toUpperCase() + "</span>";
-      // store the letters in the array
-      containers.push(requestedLetter);
-      console.log(containers.length);
-      charLength--;
+      screenArea.innerHTML += "<span id=\"character-" + containers.length + "\">" + requestedLetter.toUpperCase() + "</span>";
+
+      if(ans.includes(letters[0]) || ans.includes(letters[1])) {
+        // store the letters in the array
+        containers.push(requestedLetter);
+        console.log(containers.length);
+        charLength--;
+      }
     }
     letterCount.innerHTML = charLength === 0 ?  "The picking phase is over" : charLength + " letters left";
 
