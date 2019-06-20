@@ -40,12 +40,12 @@ $(function() {
   const chatMsg = document.querySelector('#chat-msg');
   const letterCount = document.querySelector('#letter-count');
   const timer = document.querySelector('.timer');
-  const letters = ['vowel', 'consonant'];
 
   letterCount.innerHTML = charLength + " letters left";
-  $('form').submit((e) => {
-    e.preventDefault();
+
+  $('.chars').click((e) => {
     let requestedLetter = '';
+<<<<<<< HEAD
     let msg = document.querySelector('#answer').value;
     let ans = msg.toLowerCase();
 
@@ -71,12 +71,23 @@ $(function() {
         console.log(containers.length);
         charLength--;
       }
+=======
+    let ans = e.target.value;
+    if(containers.length != 9){
+      requestedLetter = generate(ans);
+      screenArea.innerHTML += "<span id=\"character-\"" + containers.length + ">" + requestedLetter.toUpperCase() + "</span>";
+      // store the letters in the array
+      containers.push(requestedLetter);
+      charLength--;
+>>>>>>> 275b4623d2178fa4ef46e883220342f187bc02e6
     }
+
     letterCount.innerHTML = charLength === 0 ?  "The picking phase is over" : charLength + " letters left";
 
     if(charLength === 0) {
+      $('.chars').prop('disabled', true);
       timer.innerHTML = "starting in 5 seconds";
-      const start = setTimeout(() => {setTimer(timer)}, 5000);
+      const start = setTimeout(setTimer(timer), 5000);
     }
   });
 });
