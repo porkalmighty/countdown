@@ -15,7 +15,7 @@ function generate(type){
 // connection
 
 function init() {
-  var socket = io("http://localhost:4000");
+  var socket = io();
   var charLength = 9;
   var startTimer;
   var containers = new Array();
