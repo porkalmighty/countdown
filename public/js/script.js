@@ -63,7 +63,6 @@ function init() {
 
     socket.on('quit', player => {
       announcer.innerHTML = player.name + " has left the game";
-      containers = new Array();
     });
 
     socket.on('rage-quit', player => {
@@ -74,7 +73,6 @@ function init() {
       timer.innerHTML = '';
       announcer.innerHTML = player.name + " has left the game";
       answerForm.style.display = "none";
-      containers = new Array();
     });
 
     socket.on('turn', message => {
