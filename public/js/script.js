@@ -183,7 +183,7 @@ function init() {
       $('.chars').prop('disabled', true);
       socket.emit('setTimer', "starting in 5 seconds");
       const start = setTimeout(() => {
-        let time = 1;
+        let time = 30;
         startTimer = setInterval(() => {
           if(time === 0){
             clearInterval(startTimer);
