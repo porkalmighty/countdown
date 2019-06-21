@@ -3,7 +3,7 @@ const app = express();
 const http = require("http").Server(app);
 const io = require("socket.io")(http);
 const axios = require('axios');
-const port = 4000;
+const port = process.env.PORT || 4000;
 const playerList = [];
 
 var answers = 0;
