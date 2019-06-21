@@ -8,21 +8,38 @@
         font-size: 2em;
         padding-right: 10px;
       }
+
+      .play-area {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      #player-name {
+        font-size: 1.5em;
+      }
+
+      #player-name::before {
+        content: "Name: ";
+       }
+
+      #letter-choice {
+        display: none;
+      }
     </style>
   </head>
   <body>
-    <h1>Countdown Game</h1>
-    <div class="timer">
-
-    </div>
     <div class="play-area">
+        <h1>Countdown Game</h1>
+        <div class="timer"></div>
+      <div id="player-name"></div>
+      <div id="turn-msg"></div>
       <div id="letter-count"></div>
       <div class="screen-area"></div>
       <div class="conversation">
         <ul id="chat-msg"></ul>
       </div>
       <div class="form-area">
-        <div class="btn-group">
+        <div class="btn-group" id="letter-choice">
           <button type="button" class="chars" value="vowel">Vowel</button>
           <button type="button" class="chars" value="consonant">Consonant</button>
         </div>
