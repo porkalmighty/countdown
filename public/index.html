@@ -12,6 +12,7 @@
       .play-area {
         max-width: 1200px;
         margin: 0 auto;
+        text-align: center;
       }
 
       #player-name {
@@ -22,15 +23,16 @@
         content: "Name: ";
        }
 
-      #letter-choice {
+      #letter-choice, form {
         display: none;
       }
     </style>
   </head>
   <body>
     <div class="play-area">
-        <h1>Countdown Game</h1>
-        <div class="timer"></div>
+      <div id="announcer"></div>
+      <h1>Countdown Game</h1>
+      <div class="timer"></div>
       <div id="player-name"></div>
       <div id="turn-msg"></div>
       <div id="letter-count"></div>

@@ -34,9 +34,11 @@ function generate(type){
 function init() {
   var socket = io("http://localhost:4000");
   var charLength = 9;
+  var startTimer;
   const containers = new Array();
   const screenArea = document.querySelector('.screen-area');
   const letterCount = document.querySelector('#letter-count');
+  const announcer = document.querySelector('#announcer');
   const turnMsg = document.querySelector('#turn-msg');
   const letterChoice = document.querySelector('#letter-choice');
   const timer = document.querySelector('.timer');
@@ -51,6 +53,19 @@ function init() {
       screenArea.innerHTML = '';
     });
 
+    socket.on('quit', player => {
+      announcer.innerHTML = player.name + " has left the game";
+    });
+
+    socket.on('rage-quit', player => {
+      letterCount.innerHTML = '';
+      letterChoice.style.display = "none";
+      turnMsg.innerHTML = '';
+      clearInterval(startTimer);
+      timer.innerHTML = '';
+      announcer.innerHTML = player.name + " has left the game";
+    });
+
     socket.on('turn', message => {
       let player = document.querySelector('#player-name').innerHTML;
       socket.emit('player-name', player);
@@ -60,15 +75,16 @@ function init() {
     });
 
     socket.on('broadcast-turn', player => {
-      turnMsg.innerHTML = 'get ready bitch, <strong>' + player + '</strong> is picking the letters';
-    });
-
-    socket.on('show-letter', letter => {
-      screenArea.innerHTML += "<span id=\"character-\"" + containers.length + ">" + letter + "</span>";
+      turnMsg.innerHTML = 'get ready, <strong>' + player + '</strong> is picking the letters';
+      letterCount.innerHTML = charLength + " letters left";
     });
 
     socket.on('letters-counter', counter => {
       letterCount.innerHTML = counter;
+    });
+
+    socket.on('show-letter', letter => {
+      screenArea.innerHTML += "<span id=\"character-\"" + containers.length + ">" + letter + "</span>";
     });
 
     socket.on('timer', time => {
@@ -81,17 +97,26 @@ function init() {
       socket.emit('letter-length', letterLength);
     });
 
+    socket.on('new-challenger', gameStatus => {
+      turnMsg.innerHTML = 'get ready, <strong>' + gameStatus.picker + '</strong> is picking the letters';
+      let length = gameStatus.currentLetters.length;
+      letterCount.innerHTML = (charLength - length) + " letters left";
+      gameStatus.currentLetters.forEach(letters => {
+        screenArea.innerHTML += "<span id=\"character-\"" + length + ">" + letters + "</span>";
+      });
+    })
+
 
   $('.chars').click((e) => {
     let requestedLetter = '';
     let ans = e.target.value;
     if(containers.length != 9){
+      charLength--;
       requestedLetter = generate(ans);
       socket.emit('pick-letters', requestedLetter.toUpperCase());
-      socket.emit('letters-left', charLength + " letters left");
       // store the letters in the array
       containers.push(requestedLetter);
-      charLength--;
+      socket.emit('letters-left', charLength + " letters left");
     }
 
     if(charLength === 0) {
@@ -100,7 +125,7 @@ function init() {
       socket.emit('setTimer', "starting in 5 seconds");
       const start = setTimeout(() => {
         let time = 30;
-        let startTimer = setInterval(() => {
+        startTimer = setInterval(() => {
           if(time === 0){
             clearInterval(startTimer);
             socket.emit('setTimer', "Time's up!");
