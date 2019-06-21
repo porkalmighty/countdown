@@ -15,6 +15,10 @@
         text-align: center;
       }
 
+      .screen-area{
+        height: 40px;
+      }
+
       #player-name {
         font-size: 1.5em;
       }
@@ -25,6 +29,11 @@
 
       #letter-choice, form {
         display: none;
+      }
+
+      #answers{
+        column-fill: balance;
+        column-count: 8;
       }
     </style>
   </head>
@@ -47,6 +56,7 @@
         </div>
         <hr>
         <form class="form">
+          <label for="answer">Enter your answer here:</label><br/>
           <input type="text" id="answer" >
           <button id="send" type="submit" name="button">Send</button>
         </form>
@@ -54,6 +64,7 @@
           <h2>Cheat Sheet</h2>
           <textarea></textarea>
         </div>
+        <div id="possible-answers"></div>
       </div>
     </div>
   </body>
